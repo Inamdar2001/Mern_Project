@@ -70,3 +70,13 @@ export let delateBlog= async(req,res)=>{
 
     })
   }
+export let getAllBlog= async(req,res)=>{
+  let blog=await Blog.find()
+  res.json(blog)
+}
+
+export let getblogByid=async(req,res)=>{
+  let id = req.params.id
+  let blog = await Blog.findById({ _id: id });
+  res.json(blog)
+}

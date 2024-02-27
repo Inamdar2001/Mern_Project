@@ -102,8 +102,6 @@ let UserLogout = (req, res) => {
          return res.status(404).json({
             success: false,
             message: "invalid id"
-
-
          })
       }
       res.json(user)

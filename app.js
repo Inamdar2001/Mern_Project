@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 const corsOptions = {
-    origin: '*', // Replace with the origin(s) you want to allow
+    origin: 'http://localhost:5173', // Replace with the origin(s) you want to allow
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 200, // Some legacy browsers choke on 204

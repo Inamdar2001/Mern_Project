@@ -15,8 +15,11 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(cors({
-    credentials:true
-}))
+    origin: 'https://mern-project-1-c2u0.onrender.com', 
+    methods: ['GET', 'POST',"PUT","PATCH","DELETE"],      
+    allowedHeaders: ['Content-Type'], 
+    credentials: true             
+}));
 Connect(process.env.URL,process.env.DBNAME)
 
 app.use("/user",userRouter);

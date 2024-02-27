@@ -14,7 +14,13 @@ const port=process.env.PORT||8000
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
-app.use(cors());
+const corsOptions = {
+    origin: '*', // Replace with the origin(s) you want to allow
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+  };
+  app.use(cors(corsOptions))
 Connect(process.env.URL,process.env.DBNAME)
 
 app.use("/user",userRouter);

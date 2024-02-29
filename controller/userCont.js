@@ -13,15 +13,25 @@ let UserRgister = async (req, res) => {
       console.log(name, "name")
       const hashPassword = await bcrypt.hash(password, 10)
       let user = new User({ password: hashPassword, name, email });
-      console.log(user)
-      await user.save();
+      let userExit = await User.findOne({ name })
 
+      if(userExit){
+         return res.json({
+            success:false,
+            message:"user already exit"
+      })
+      }
+      await user.save();
+      console.log(user)
+
+       
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY);
       console.log(token)
 
       return res.status(201).cookie("token", token).json({
          success: true,
-         message: "User Register successfully"
+         message: "User Register successfully",
+         user
       })
    } catch (error) {
       console.error("Error occurred ", error);

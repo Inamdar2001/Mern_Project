@@ -12,8 +12,6 @@ let UserRgister = async (req, res) => {
       let { password, name, email } = req.body
       console.log(name, "name")
       const hashPassword = await bcrypt.hash(password, 10)
-      let user = new User({ password: hashPassword, name, email });
-      let userExit = await User.findOne({ name })
 
       if(userExit){
          return res.json({
@@ -21,6 +19,10 @@ let UserRgister = async (req, res) => {
             message:"user already exit"
       })
       }
+      let user = new User({ password: hashPassword, name, email });
+      let userExit = await User.findOne({ name })
+
+      
       await user.save();
       console.log(user)
 

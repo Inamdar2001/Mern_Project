@@ -12,7 +12,8 @@ let UserRgister = async (req, res) => {
       let { password, name, email } = req.body
       console.log(name, "name")
       const hashPassword = await bcrypt.hash(password, 10)
-
+      let userExit = await User.findOne({name: name })
+         
       if(userExit){
          return res.json({
             success:false,
@@ -20,7 +21,6 @@ let UserRgister = async (req, res) => {
       })
       }
       let user = new User({ password: hashPassword, name, email });
-      let userExit = await User.findOne({ name })
 
       
       await user.save();
@@ -37,7 +37,7 @@ let UserRgister = async (req, res) => {
       })
    } catch (error) {
       console.error("Error occurred ", error);
-      return res.status(500).send({ success: false, message: "Internal server error." });
+      return res.status(500).send({ success: false, message: "User" });
    }
 
 }

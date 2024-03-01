@@ -5,7 +5,7 @@ let blogRouter = express();
 
 blogRouter.get("/getBlog", isAuthanticate, getBlog);
 blogRouter.put("/updateBlog/:id", isAuthanticate, updateBlog);
-blogRouter.post("/createBlog", isAuthanticate, createBlog);
+blogRouter.post("/createBlog", createBlog);
 blogRouter.delete("/delateBlog/:id", isAuthanticate, delateBlog);
 blogRouter.get("/getAllBlog",getAllBlog)
 blogRouter.get("/getblogByid/:id",getblogByid)

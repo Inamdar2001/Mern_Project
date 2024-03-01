@@ -1,5 +1,4 @@
 import Jwt from "jsonwebtoken"
-import User from "../models/User.model.js"
 
 let isAuthanticate = async (req, res, next) => {
   let { token } = req.cookies
@@ -10,8 +9,7 @@ let isAuthanticate = async (req, res, next) => {
     })
   }
 
-  let deCode = Jwt.verify(token, "@1201877897");
-  req.user = await User.findById(deCode._id)
+  let deCode = Jwt.verify(token, process.env.JWT_SECRET_KEY);
   next()
 }
 

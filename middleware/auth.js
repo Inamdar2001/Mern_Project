@@ -2,8 +2,8 @@ import Jwt from "jsonwebtoken"
 import User from "../models/User.model.js"
 
 let isAuthanticate = async (req, res, next) => {
-  let token = req.cookies.token
-  console.log("user token", token)
+  let  token  = req.cookies.token
+  console.log(token)
   if (!token) {
     return res.json({
       succsess: false,
@@ -12,8 +12,7 @@ let isAuthanticate = async (req, res, next) => {
   }
 
   let deCode = Jwt.verify(token, "@1201877897");
-  req.user = await User.findById(deCode._id)
-  console.log("check save ya not ", req.user)
+  console.log(deCode)
   next()
 }
 

@@ -12,21 +12,21 @@ let UserRgister = async (req, res) => {
       let { password, name, email } = req.body
       console.log(name, "name")
       const hashPassword = await bcrypt.hash(password, 10)
-      let userExit = await User.findOne({ name: name })
-
-      if (userExit) {
+      let userExit = await User.findOne({name: name })
+         
+      if(userExit){
          return res.json({
-            success: false,
-            message: "user already exit"
-         })
+            success:false,
+            message:"user already exit"
+      })
       }
       let user = new User({ password: hashPassword, name, email });
 
-
+      
       await user.save();
       console.log(user)
 
-
+       
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY);
       console.log(token)
 
@@ -46,10 +46,9 @@ let UserRgister = async (req, res) => {
 
 // User Login
 let UserLogin = async (req, res) => {
-
+ 
    try {
       let { email } = req.body;
-      console.log(req.user)
       let user = await User.findOne({ email })
 
       if (!user) {
@@ -71,11 +70,11 @@ let UserLogin = async (req, res) => {
       return res.status(201).cookie("token", token).json({
          success: true,
          message: "login successfully",
-         token: token,
-         user: user
-
+         token:token,
+         user:user
+         
       })
-
+         
 
    } catch (error) {
       console.error("Error occurred LOgin", error);
@@ -87,8 +86,8 @@ let UserLogin = async (req, res) => {
 
 // User get Profile
 let getProfile = (req, res) => {
-
-
+      
+   
    res.status(201).json({
       success: true,
       user: req.user
@@ -109,7 +108,7 @@ let UserLogout = (req, res) => {
    })
 }
 
-let getuserByid = async (req, res) => {
+ let getuserByid = async (req, res) => {
 
    try {
       let id = req.params.id
@@ -125,4 +124,4 @@ let getuserByid = async (req, res) => {
       console.log(error)
    }
 }
-export { UserRgister, UserLogin, getProfile, UserLogout, getuserByid } 
+export { UserRgister, UserLogin, getProfile, UserLogout,getuserByid } 

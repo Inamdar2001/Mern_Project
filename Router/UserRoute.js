@@ -7,6 +7,6 @@ let userRouter=express();
 userRouter.post("/Register",isAuthanticate,UserRegister);
 userRouter.post("/login",isAuthanticate,UserLogin);
 userRouter.get("/logout",UserLogout);
-userRouter.get("/getMyprofile",getProfile);
+userRouter.get("/getMyprofile",isAuthanticate,getProfile);
 userRouter.get("/getuserByid/:id",getuserByid)
 export default userRouter

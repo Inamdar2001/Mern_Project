@@ -86,8 +86,7 @@ let UserLogin = async (req, res) => {
 
 // User get Profile
 let getProfile = (req, res) => {
-   console.log(req.user)
-
+        console.log(req.user)
    res.status(201).json({
       success: true,
       user: req.user

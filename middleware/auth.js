@@ -2,8 +2,8 @@ import Jwt from "jsonwebtoken"
 import User from "../models/User.model.js"
 
 let isAuthanticate = async (req, res, next) => {
-  let  token  = req.cookies.token
-  console.log(token)
+  let  {token } = req.cookies
+  console.log("from auth",token)
   if (!token) {
     return res.json({
       succsess: false,
@@ -12,8 +12,11 @@ let isAuthanticate = async (req, res, next) => {
   }
 
   let deCode = Jwt.verify(token, process.env.JWT_SECRET_KEY);
-  console.log(deCode)
-  next()
+  req.user = deCode;
+  console.log("decode",deCode)
+
+  next();
+
 }
 
 export default isAuthanticate

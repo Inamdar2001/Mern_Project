@@ -6,47 +6,47 @@ import bcrypt from 'bcrypt';
 
 
 // User Rgister
-let UserRgister = async (req, res) => {
-
+const UserRegister = async (req, res) => {
    try {
-      let { password, name, email } = req.body
-      console.log(name, "name")
-      const hashPassword = await bcrypt.hash(password, 10)
-      let userExit = await User.findOne({name: name })
-         
-      if(userExit){
+      let { password, name, email } = req.body;
+      console.log(name, "name");
+
+      const hashPassword = await bcrypt.hash(password, 10);
+
+      let userExists = await User.findOne({ name: name });
+
+      if (userExists) {
          return res.json({
-            success:false,
-            message:"user already exit"
-      })
+            success: false,
+            message: "User already exists"
+         });
       }
+
       let user = new User({ password: hashPassword, name, email });
 
-      
       await user.save();
-      console.log(user)
+      console.log(user);
 
-       
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY);
-      console.log(token)
+      console.log(token);
 
       return res.status(201).cookie("token", token).json({
          success: true,
-         message: "User Register successfully",
+         message: "User registered successfully",
          user
-      })
+      });
    } catch (error) {
-      console.error("Error occurred ", error);
-      return res.status(500).send({ success: false, message: "User" });
+      console.error("Error occurred during user registration:", error);
+      return res.status(500).json({ success: false, message: "Internal Server Error" });
    }
+};
 
-}
 
 
 
 // User Login
 let UserLogin = async (req, res) => {
- 
+
    try {
       let { email } = req.body;
       let user = await User.findOne({ email })
@@ -70,11 +70,11 @@ let UserLogin = async (req, res) => {
       return res.status(201).cookie("token", token).json({
          success: true,
          message: "login successfully",
-         token:token,
-         user:user
-         
+         token: token,
+         user: user
+
       })
-         
+
 
    } catch (error) {
       console.error("Error occurred LOgin", error);
@@ -86,8 +86,8 @@ let UserLogin = async (req, res) => {
 
 // User get Profile
 let getProfile = (req, res) => {
-      console.log(req.user)
-   
+   console.log(req.user)
+
    res.status(201).json({
       success: true,
       user: req.user
@@ -108,7 +108,7 @@ let UserLogout = (req, res) => {
    })
 }
 
- let getuserByid = async (req, res) => {
+let getuserByid = async (req, res) => {
 
    try {
       let id = req.params.id
@@ -124,4 +124,4 @@ let UserLogout = (req, res) => {
       console.log(error)
    }
 }
-export { UserRgister, UserLogin, getProfile, UserLogout,getuserByid } 
+export { UserRegister, UserLogin, getProfile, UserLogout, getuserByid } 

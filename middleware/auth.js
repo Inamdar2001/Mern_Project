@@ -11,7 +11,7 @@ let isAuthanticate = async (req, res, next) => {
     })
   }
 
-  let deCode = Jwt.verify(token, "@1201877897");
+  let deCode = Jwt.verify(token, process.env.JWT_SECRET_KEY);
   console.log(deCode)
   next()
 }

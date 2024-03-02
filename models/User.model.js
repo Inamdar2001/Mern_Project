@@ -11,9 +11,6 @@ let Userscehma=new mongoose.Schema({
     }
     
     
-    
-    
-    
 })
 
 let User=new mongoose.model("MERN_DATA",Userscehma)
